@@ -4,7 +4,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: import('../components/home.vue'),
+    component: () => import('../components/home.vue'),
     meta: {title:'Homepod',keyword:'homepod',description:'youranreus`s homepod'},
   },
   {
