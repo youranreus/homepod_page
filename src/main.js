@@ -1,13 +1,20 @@
 import { createApp } from 'vue'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
 import App from './App.vue'
+
+//style sheets
+import 'vant/lib/index.css';
 import 'normalize.css/normalize.css'
 import 'font-awesome/css/font-awesome.min.css';
 import animate from 'animate.css'
-import router from './router'
+
+//components
 import { Popup } from 'vant';
-import 'vant/lib/index.css';
+
+//functional
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import router from './router'
+import { createStore } from 'vuex'
 
 router.beforeEach((to, from, next) => {
     /* 路由发生变化修改页面title */
@@ -17,9 +24,36 @@ router.beforeEach((to, from, next) => {
     next()
 })
 
+const store = createStore({
+    state () {
+        return {
+            articles:[],
+            plugins:{},
+            systemInfo:{
+                version: '加载中',
+                msg: '加载中',
+                DB: '加载中'
+            }
+        }
+    },
+    mutations: {
+        storeArts(state, n){
+            state.articles = n;
+        },
+        storePlugins(state, n){
+            state.plugins = n;
+        },
+        storeSystemInfo(state, n){
+            state.systemInfo = n;
+        }
+    }
+})
+
+
 const X = createApp(App)
 X.use(router)
 X.use(animate)
 X.use(Popup)
 X.use(VueAxios, axios)
+X.use(store)
 X.mount('#app')

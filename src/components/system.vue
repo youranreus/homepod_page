@@ -113,10 +113,14 @@ export default {
   },
   methods: {
     getBasic() {
-      this.$http.get('https://i.exia.xyz/X/status').then((response) => {
-        this.basicInfo = response.data;
-      });
-
+      this.basicInfo = this.$store.state.systemInfo;
+      if(this.basicInfo.version === '加载中')
+      {
+        this.$http.get('https://i.exia.xyz/X/status').then((response) => {
+          this.$store.commit('storeSystemInfo', response.data);
+          this.basicInfo = response.data;
+        });
+      }
       this.$http.get('https://i.exia.xyz/X/getModuleList').then((response) => {
         this.ModuleList = response.data;
       })

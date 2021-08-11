@@ -157,10 +157,16 @@ export default {
     },
     getArticles() {
       let that = this;
-      that.$http.get('https://i.exia.xyz/X/getBlogRSS?url=https://gundam.exia.xyz/feed&type=force').then((response) => {
-        that.posts = response.data
-        that.msg = 'ないよ~'
-      })
+      that.posts = that.$store.state.articles;
+      if(that.posts === undefined || that.posts.length === 0)
+      {
+        console.log('yo');
+        that.$http.get('https://i.exia.xyz/X/getBlogRSS?url=https://gundam.exia.xyz/feed&type=force').then((response) => {
+          that.posts = response.data
+          that.$store.commit('storeArts',response.data);
+          that.msg = 'ないよ~'
+        })
+      }
     }
   }
 }
