@@ -17,7 +17,7 @@
     <div id="footer">
       <p>
         © Project EXIA
-        made with ❤️ by 季悠然<br> <a href="http://beian.miit.gov.cn/">粤ICP备19008557-1号</a> |
+        made with ❤️ by 季悠然<br> <a href="http://beian.miit.gov.cn">粤ICP备19008557号</a> |
         <a href="https://icp.gov.moe" target="_blank">萌ICP备 </a><a href="https://icp.gov.moe/?keyword=20214396" target="_blank"> 20214396号</a></p>
     </div>
   </div>
