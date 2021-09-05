@@ -46,6 +46,15 @@ export default {
     more() {
       this.$router.push({path: 'about'});
     }
+  },
+  created() {
+    this.$http.get('/api/data').then((response) => {
+      this.$store.commit('updateSystemData', response.data.data);
+      console.log(this.$store.state.OriginData);
+    });
+    // this.UserMeta.avatar = this.$store.state.OriginData.home.avatar;
+    // this.UserMeta.username = this.$store.state.OriginData.home.username;
+    // this.UserMeta.des = this.$store.state.OriginData.home.detail;
   }
 }
 </script>

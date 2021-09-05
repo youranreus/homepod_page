@@ -33,10 +33,14 @@ const store = createStore({
                 version: '加载中',
                 msg: '加载中',
                 DB: '加载中'
-            }
+            },
+            OriginData:{}
         }
     },
     mutations: {
+        updateSystemData(state, n){
+            state.OriginData = n;
+        },
         storeArts(state, n){
             state.articles = n;
         },

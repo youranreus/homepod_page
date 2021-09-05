@@ -134,7 +134,8 @@ export default {
     }
   },
   created() {
-    this.getBasic()
+    this.getBasic();
+    console.log(this.$store.state.OriginData);
   }
 }
 </script>

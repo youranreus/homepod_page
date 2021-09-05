@@ -1,9 +1,15 @@
 <template>
   <div id="wrap">
     <div id="wrap-content">
-      <transition mode="out-in" enter-active-class="animate__fadeIn" leave-active-class="animate__fadeOut">
-        <router-view class="animate__animated"/>
-      </transition>
+
+        <router-view v-slot="{ Component }">
+          <transition mode="out-in" enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut">
+            <keep-alive>
+              <component :is="Component"/>
+            </keep-alive>
+          </transition>
+        </router-view>
+
     </div>
   </div>
 </template>
