@@ -57,8 +57,8 @@
           </div>
           <div class="section" id="copyright">
             <div class="section-content">
-              <p>听说我要写BUG，爷爷奶奶可高兴啦，给我买了最爱吃的Vue入门指南</p>
-              <h3>@youranreus</h3>
+              <p>{{ this.$store.state.OriginData.system.sentence }}</p>
+              <h3>@{{ this.$store.state.OriginData.home.username }}</h3>
             </div>
           </div>
         </div>
@@ -86,10 +86,10 @@
         v-model:show="show"
         round>
       <div id="ModuleDetail">
-        <h3>{{ModuleInfo.name}}</h3>
-        <p>{{ModuleInfo.des}}</p>
+        <h3>{{ ModuleInfo.name }}</h3>
+        <p>{{ ModuleInfo.des }}</p>
         <h4>功能列表</h4>
-        <li v-for="func in ModuleInfo.func" v-bind:key="func">{{func}}</li>
+        <li v-for="func in ModuleInfo.func" v-bind:key="func">{{ func }}</li>
         <h5>ないよ~</h5>
       </div>
     </van-popup>
@@ -114,28 +114,32 @@ export default {
   methods: {
     getBasic() {
       this.basicInfo = this.$store.state.systemInfo;
-      if(this.basicInfo.version === '加载中')
-      {
-        this.$http.get('https://i.exia.xyz/X/status').then((response) => {
+      if (this.basicInfo.version === '加载中') {
+        this.$http.get(this.$store.state.OriginData.api + '/X/status').then((response) => {
           this.$store.commit('storeSystemInfo', response.data);
           this.basicInfo = response.data;
         });
       }
-      this.$http.get('https://i.exia.xyz/X/getModuleList').then((response) => {
+      this.$http.get(this.$store.state.OriginData.api + '/X/getModuleList').then((response) => {
         this.ModuleList = response.data;
       })
     },
     getModuleInfo(a) {
       let name = a.currentTarget.id.slice(7);
-      this.$http.get('https://i.exia.xyz/X/getModuleInfo/' + name).then((response) => {
+      this.$http.get(this.$store.state.OriginData.api + '/X/getModuleInfo/' + name).then((response) => {
         this.ModuleInfo = response.data;
         this.show = true;
       })
     }
   },
   created() {
-    this.getBasic();
-    console.log(this.$store.state.OriginData);
+    if (Object.keys(this.$store.state.OriginData).length !== 0) {
+      this.profile = this.$store.state.OriginData.about;
+      this.getBasic();
+    } else {
+      console.log('jump');
+      window.location = '/';
+    }
   }
 }
 </script>
@@ -285,6 +289,7 @@ a:link, a:visited {
   font-size: 20px;
   margin: 40px 0 10px;
 }
+
 #ModuleDetail li {
   list-style-type: none;
   color: #86868b;

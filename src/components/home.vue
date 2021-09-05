@@ -14,12 +14,7 @@
       </div>
     </div>
 
-    <div id="footer">
-      <p>
-        © Project EXIA
-        made with ❤️ by 季悠然<br> <a href="http://beian.miit.gov.cn">粤ICP备19008557号</a> |
-        <a href="https://icp.gov.moe" target="_blank">萌ICP备 </a><a href="https://icp.gov.moe/?keyword=20214396" target="_blank"> 20214396号</a></p>
-    </div>
+    <div id="footer" v-html="UserMeta.footer"></div>
   </div>
 </template>
 
@@ -31,7 +26,8 @@ export default {
       UserMeta: {
         avatar: 'https://sdn.geekzu.org/avatar/87e0f8d2f0f70987061cec6376cb7f97?s=200&r=G&d=',
         name: 'Youranreus',
-        des: 'Ich bin ein Student von SZTU, Learning Computer Science. 今、日本语とドイツ語を勉强しています！'
+        des: 'Ich bin ein Student von SZTU, Learning Computer Science. 今、日本语とドイツ語を勉强しています！',
+        footer: ''
       },
       emoji: '👋'
     }
@@ -50,11 +46,11 @@ export default {
   created() {
     this.$http.get('/api/data').then((response) => {
       this.$store.commit('updateSystemData', response.data.data);
-      console.log(this.$store.state.OriginData);
+      this.UserMeta.avatar = this.$store.state.OriginData.home.avatar;
+      this.UserMeta.username = this.$store.state.OriginData.home.username;
+      this.UserMeta.des = this.$store.state.OriginData.home.detail;
+      this.UserMeta.footer = this.$store.state.OriginData.home.footer;
     });
-    // this.UserMeta.avatar = this.$store.state.OriginData.home.avatar;
-    // this.UserMeta.username = this.$store.state.OriginData.home.username;
-    // this.UserMeta.des = this.$store.state.OriginData.home.detail;
   }
 }
 </script>
@@ -148,8 +144,8 @@ export default {
   opacity: 0.5;
 }
 
-#footer a,#footer a:link,#footer a:visited{
-  color: #86868b;
+#footer >>> a,#footer a:link,#footer a:visited, a:-webkit-any-link{
+  color: #86868b!important;
   text-decoration: none;
 }
 
