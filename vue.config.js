@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-let data = require('./public/profile')  //本地json文件数据
+let data = require('./public/profile.json')  //本地json文件数据
 
 let apiRoutes = express.Router();
 app.use('/api', apiRoutes)
