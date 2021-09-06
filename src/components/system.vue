@@ -43,7 +43,7 @@
           <div class="section" id="websites">
             <div class="section-content">
               <h3>网站状态</h3>
-              <ul>
+              <ul v-if="basicInfo !== '加载中'">
                 <li v-for="item in basicInfo.websiteStatus" v-bind:key="item">{{ item[0] }}<span
                     :class="(item[1] === 200) ? 'success' : 'error'" class="right">{{ item[1] }}</span></li>
               </ul>
@@ -57,8 +57,8 @@
           </div>
           <div class="section" id="copyright">
             <div class="section-content">
-              <p>{{ this.$store.state.OriginData.system.sentence }}</p>
-              <h3>@{{ this.$store.state.OriginData.home.username }}</h3>
+              <p>{{ profile.system.sentence }}</p>
+              <h3>@{{ profile.home.username }}</h3>
             </div>
           </div>
         </div>
@@ -108,25 +108,26 @@ export default {
       },
       ModuleList: {},
       ModuleInfo: {},
-      show: false
+      show: false,
+      profile: {}
     }
   },
   methods: {
     getBasic() {
       this.basicInfo = this.$store.state.systemInfo;
       if (this.basicInfo.version === '加载中') {
-        this.$http.get(this.$store.state.OriginData.api + '/X/status').then((response) => {
+        this.$http.get(this.$store.state.api + '/X/status').then((response) => {
           this.$store.commit('storeSystemInfo', response.data);
           this.basicInfo = response.data;
         });
       }
-      this.$http.get(this.$store.state.OriginData.api + '/X/getModuleList').then((response) => {
+      this.$http.get(this.$store.state.api + '/X/getModuleList').then((response) => {
         this.ModuleList = response.data;
       })
     },
     getModuleInfo(a) {
       let name = a.currentTarget.id.slice(7);
-      this.$http.get(this.$store.state.OriginData.api + '/X/getModuleInfo/' + name).then((response) => {
+      this.$http.get(this.$store.state.api + '/X/getModuleInfo/' + name).then((response) => {
         this.ModuleInfo = response.data;
         this.show = true;
       })
@@ -134,7 +135,7 @@ export default {
   },
   created() {
     if (Object.keys(this.$store.state.OriginData).length !== 0) {
-      this.profile = this.$store.state.OriginData.about;
+      this.profile = this.$store.state.OriginData;
       this.getBasic();
     } else {
       console.log('jump');

@@ -2,14 +2,14 @@
   <div id="home-container">
     <div id="home-l">
       <div>
-        <img id="avatar" v-bind:src="UserMeta.avatar" :alt="UserMeta.name">
+        <img id="avatar" v-bind:src="UserMeta.avatar" :alt="UserMeta.username">
       </div>
     </div>
     <div id="home-r">
       <div>
         <h3><span @click="hi(1)" @mouseover="hi(0)" class="animate__animated animate__wobble">{{ emoji }}</span> Hi,
-          This is {{ UserMeta.name }}</h3>
-        <p>{{ UserMeta.des }}</p>
+          This is {{ UserMeta.username }}</h3>
+        <p>{{ UserMeta.detail }}</p>
         <button id="more" @click="more">More</button>
       </div>
     </div>
@@ -25,8 +25,8 @@ export default {
     return {
       UserMeta: {
         avatar: 'https://sdn.geekzu.org/avatar/87e0f8d2f0f70987061cec6376cb7f97?s=200&r=G&d=',
-        name: 'Youranreus',
-        des: 'Ich bin ein Student von SZTU, Learning Computer Science. 今、日本语とドイツ語を勉强しています！',
+        username: 'Youranreus',
+        detail: 'Ich bin ein Student von SZTU, Learning Computer Science. 今、日本语とドイツ語を勉强しています！',
         footer: ''
       },
       emoji: '👋'
@@ -44,12 +44,9 @@ export default {
     }
   },
   created() {
-    this.$http.get('/api/data').then((response) => {
-      this.$store.commit('updateSystemData', response.data.data);
-      this.UserMeta.avatar = this.$store.state.OriginData.home.avatar;
-      this.UserMeta.username = this.$store.state.OriginData.home.username;
-      this.UserMeta.des = this.$store.state.OriginData.home.detail;
-      this.UserMeta.footer = this.$store.state.OriginData.home.footer;
+    this.$http.get(this.$store.state.api + '/X/getProfileData').then((response) => {
+      this.$store.commit('updateSystemData', response.data);
+      this.UserMeta = response.data.home;
     });
   }
 }
