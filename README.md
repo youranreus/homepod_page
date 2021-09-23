@@ -25,7 +25,7 @@ npm install
 配置好了之后，在项目的根目录执行
 
 ```bash
-npm build
+npm run build
 ```
 
 最终在`build`文件夹可以得到打包后的静态文件，可以直接部署。
