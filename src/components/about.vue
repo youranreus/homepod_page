@@ -165,7 +165,7 @@ export default {
       that.posts = that.$store.state.articles;
       if (that.posts === undefined || that.posts.length === 0) {
         console.log('yo');
-        that.$http.get(this.$store.state.api + '/X/getBlogRSS?url=https://gundam.exia.xyz/feed&type=force').then((response) => {
+        that.$http.get(this.$store.state.api + '/X/getBlogRSS?url=https://blog.mitsuha.space/feed&type=force').then((response) => {
           that.posts = response.data
           that.$store.commit('storeArts', response.data);
           that.msg = 'ないよ~'
