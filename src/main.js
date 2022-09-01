@@ -35,7 +35,7 @@ const store = createStore({
                 DB: '加载中'
             },
             OriginData:{},
-            api: "https://i.exia.xyz"
+            api: "https://i.exia.xyz:21723"
         }
     },
     mutations: {
